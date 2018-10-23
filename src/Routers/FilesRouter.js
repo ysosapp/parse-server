@@ -36,6 +36,7 @@ export class FilesRouter {
   getHandler(req, res) {
     const config = Config.get(req.params.appId);
     const filesController = config.filesController;
+    const imageFetcherAdapter = config.imageFetcherAdapter;
     const filename = req.params.filename;
     const contentType = mime.getType(filename);
     if (isFileStreamable(req, filesController)) {
@@ -47,16 +48,26 @@ export class FilesRouter {
         res.end('File not found.');
       });
     } else {
-      filesController.getFileData(config, filename).then((data) => {
-        res.status(200);
-        res.set('Content-Type', contentType);
-        res.set('Content-Length', data.length);
-        res.end(data);
-      }).catch(() => {
-        res.status(404);
-        res.set('Content-Type', 'text/plain');
-        res.end('File not found.');
-      });
+      filesController
+        .getFileData(config, filename)
+        .then(data => {
+          if (imageFetcherAdapter == null) {
+            return Promise.resolve(data);
+          }
+
+          return imageFetcherAdapter.adapt(req.query, filename, contentType, data);
+        })
+        .then(data => {
+          res.status(200);
+          res.set('Content-Type', contentType);
+          res.set('Content-Length', data.length);
+          res.end(data);
+        })
+        .catch(() => {
+          res.status(404);
+          res.set('Content-Type', 'text/plain');
+          res.end('File not found.');
+        });
     }
   }
 
