@@ -1,11 +1,11 @@
 {
   "name": "@ysos/parse-server",
-  "version": "2.7.2",
+  "version": "4.3.0",
   "description": "An express module providing a Parse-compatible API server",
   "main": "lib/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/parse-community/parse-server"
+    "url": "https://github.com/ysosapp/parse-server"
   },
   "files": [
     "bin/",
@@ -123,7 +123,7 @@
     "logo": "https://opencollective.com/parse-server/logo.txt?reverse=true&variant=binary"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
+    "registry": "https://registry.npmjs.org/"
   },
   "funding": {
     "type": "opencollective",
