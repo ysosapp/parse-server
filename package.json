@@ -1,5 +1,5 @@
 {
-  "name": "parse-server",
+  "name": "@ysos/parse-server",
   "version": "4.5.0",
   "description": "An express module providing a Parse-compatible API server",
   "main": "lib/index.js",
